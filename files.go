@@ -49,7 +49,29 @@ func stripTemplatePrefix(template string, path string) (string) {
 func createCompiledFile(inputPath string, outputPath string, name string) {
   AppFs.Create(outputPath)
   content := renderFile(inputPath, name)
-  afero.WriteFile(AppFs, p, []byte(content), 0755)
+  afero.WriteFile(AppFs, outputPath, []byte(content), 0755)
+}
+
+func compileTemplate(inputPath string, template string, name string) error {
+  stat, _ := os.Stat(inputPath) // TODO Check error
+  outputPath := stripTemplatePrefix(template, inputPath)
+
+  // Skip root
+  if outputPath == "." { return nil }
+
+  if exists(outputPath) {
+    log.Fatal(ErrNoOverwrite)
+  }
+
+  if stat.IsDir() {
+    AppFs.Mkdir(outputPath, 0755)
+  } else {
+    createCompiledFile(outputPath, inputPath, name)
+  }
+
+  fmt.Printf("Created: %s\n", outputPath)
+
+  return nil
 }
 
 // Compiles a template and moves it over
@@ -61,26 +83,7 @@ func compile(template string, name string) {
 
   // Create Walk function
   walkFn := func(inputPath string, info os.FileInfo, err error) error {
-
-    stat, err := os.Stat(inputPath)
-    outPath = stripTemplatePrefix(template, inputPath)
-
-    // Skip root
-    if outputPath == "." { return nil }
-
-    if exists(outputPath) {
-      log.Fatal(ErrNoOverwrite)
-    }
-
-    if stat.IsDir() {
-      AppFs.Mkdir(outputPath, 0755)
-    } else {
-      createCompiledFile(outputPath, inputPath, name)
-    }
-
-    fmt.Printf("Created: %s\n", p)
-
-    return nil
+    return compileTemplate(inputPath, template, name)
   }
 
   // Actually walk through here.
