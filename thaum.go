@@ -1,9 +1,7 @@
 package main
 
 import (
-  "fmt"
   "os"
-  "log"
 
   "github.com/urfave/cli"
 )
@@ -11,11 +9,9 @@ import (
 // Called when thaum is actually run.
 func onRun(c *cli.Context) error {
   template := c.Args().Get(0)
-  // name := c.Args().Get(1)
+  name := c.Args().Get(1)
 
-  path, err := findTemplate(template)
-  if err != nil { log.Fatal(err) }
-  fmt.Println(path)
+  compile(template, name)
 
   return nil
 }

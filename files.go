@@ -4,6 +4,7 @@ import (
   "fmt"
   "os"
   "log"
+  "path/filepath"
   "github.com/spf13/afero"
 )
 
@@ -35,11 +36,53 @@ func findTemplate(template string) (string, error) {
   return path, nil // Success!
 }
 
-// The [WalkFn](https://golang.org/pkg/path/filepath/#WalkFunc).
-func walkFiles(path string, info os.FileInfo, err error) error {
-  if err != nil { return err }
+// Strips a real path of style `<THAUM_FILES>/<template>/blahblah`
+// to just `blahblah`
+func stripTemplatePrefix(template string, path string) (string) {
+  prefix := fmt.Sprintf("%s/%s", THAUM_FILES, template)
+  p, err := filepath.Rel(prefix, path)
+  if err != nil { log.Fatal(err) }
+  return p
+}
 
-  fmt.Println(path)
+// Creates a compiled file in the output
+func createCompiledFile(inputPath string, outputPath string, name string) {
+  AppFs.Create(outputPath)
+  content := renderFile(inputPath, name)
+  afero.WriteFile(AppFs, p, []byte(content), 0755)
+}
 
-  return nil
+// Compiles a template and moves it over
+func compile(template string, name string) {
+
+  // Find the path for the template; make sure template exists
+  path, err := findTemplate(template)
+  if err != nil { log.Fatal(err) }
+
+  // Create Walk function
+  walkFn := func(inputPath string, info os.FileInfo, err error) error {
+
+    stat, err := os.Stat(inputPath)
+    outPath = stripTemplatePrefix(template, inputPath)
+
+    // Skip root
+    if outputPath == "." { return nil }
+
+    if exists(outputPath) {
+      log.Fatal(ErrNoOverwrite)
+    }
+
+    if stat.IsDir() {
+      AppFs.Mkdir(outputPath, 0755)
+    } else {
+      createCompiledFile(outputPath, inputPath, name)
+    }
+
+    fmt.Printf("Created: %s\n", p)
+
+    return nil
+  }
+
+  // Actually walk through here.
+  afero.Walk(AppFs, path, walkFn)
 }
