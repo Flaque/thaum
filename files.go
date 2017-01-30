@@ -96,7 +96,6 @@ func compileTemplate(inputPath string, template string, name string) error {
 	}
 
 	outputPath := stripTemplatePrefix(template, inputPath)
-	fmt.Println(outputPath)
 	outputPath = render(outputPath, name) // Compile any {{}}s in paths
 
 	// Skip root
