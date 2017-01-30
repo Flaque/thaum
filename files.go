@@ -4,7 +4,8 @@ import (
   "fmt"
   "os"
   "log"
-  "path/filepath"
+  "path"
+  "strings"
   "github.com/spf13/afero"
 )
 
@@ -18,11 +19,37 @@ func exists(path string) (bool) {
   return exists
 }
 
+// Returns the path if a query exists above the "from" directory
+func existsAbove(from string, query string) (string, error) {
+
+  myPath := path.Join(from, query)
+  if exists(myPath) {
+    return myPath, nil
+  }
+
+  // We've hit root!
+  if path.Join(from, "../") == from {
+    return "", ErrNoTemplateFolderAnywhere
+  }
+
+  // Search in parent directory
+  return existsAbove(path.Join(from, "../"), query)
+}
+
+// Returns the current working directory
+func cwd() (string) {
+  wd, err := os.Getwd()
+  if err != nil {
+    panic(err)
+  }
+  return wd
+}
+
 // Returns the path of a template if that template exists
-func findTemplate(template string) (string, error) {
+func findTemplate(template string, thaumPath string) (string, error) {
 
   // Check if thaum_files folder exists
-  path := fmt.Sprintf("./%s", THAUM_FILES)
+  path := thaumPath
   if !exists(path) {
     return "", ErrNoTemplateFolder
   }
@@ -39,37 +66,50 @@ func findTemplate(template string) (string, error) {
 // Strips a real path of style `<THAUM_FILES>/<template>/blahblah`
 // to just `blahblah`
 func stripTemplatePrefix(template string, path string) (string) {
-  prefix := fmt.Sprintf("%s/%s", THAUM_FILES, template)
-  p, err := filepath.Rel(prefix, path)
-  if err != nil { log.Fatal(err) }
-  return p
+  splitPoint := fmt.Sprintf("%s/%s", THAUM_FILES, template)
+  partialPath := strings.Split(path, splitPoint)[1]
+  return strings.TrimPrefix(partialPath, "/")
 }
 
 // Creates a compiled file in the output
 func createCompiledFile(inputPath string, outputPath string, name string) {
-  AppFs.Create(outputPath)
+  file, err := AppFs.Create(outputPath)
+  if err != nil { log.Fatal(err) }
+
   content := renderFile(inputPath, name)
-  afero.WriteFile(AppFs, outputPath, []byte(content), 0755)
+  _, err = file.WriteString(content)
+  if err != nil { log.Fatal(err) }
+
+  fmt.Printf("Created file: %s\n", outputPath)
 }
 
 func compileTemplate(inputPath string, template string, name string) error {
-  stat, _ := os.Stat(inputPath) // TODO Check error
+  stat, err := os.Stat(inputPath)
+  if err != nil {
+    log.Fatal(err)
+  }
+
   outputPath := stripTemplatePrefix(template, inputPath)
+  fmt.Println(outputPath)
+  outputPath = render(outputPath, name) // Compile any {{}}s in paths
 
   // Skip root
-  if outputPath == "." { return nil }
+  if outputPath == "." || outputPath == "" { return nil }
 
   if exists(outputPath) {
     log.Fatal(ErrNoOverwrite)
   }
 
   if stat.IsDir() {
-    AppFs.Mkdir(outputPath, 0755)
-  } else {
-    createCompiledFile(outputPath, inputPath, name)
-  }
+    err := AppFs.Mkdir(outputPath, 0755)
+    if err != nil {
+      log.Fatal(err)
+    }
 
-  fmt.Printf("Created: %s\n", outputPath)
+    fmt.Printf("Created folder: %s\n", outputPath)
+  } else {
+    createCompiledFile(inputPath, outputPath, name)
+  }
 
   return nil
 }
@@ -77,8 +117,14 @@ func compileTemplate(inputPath string, template string, name string) error {
 // Compiles a template and moves it over
 func compile(template string, name string) {
 
+  thaumPath, err := existsAbove(cwd(), THAUM_FILES)
+  if err != nil {
+    log.Fatal(err)
+  }
+  fmt.Printf("Using thaum_files at: %s\n", thaumPath)
+
   // Find the path for the template; make sure template exists
-  path, err := findTemplate(template)
+  path, err := findTemplate(template, thaumPath)
   if err != nil { log.Fatal(err) }
 
   // Create Walk function
