@@ -4,7 +4,7 @@ Thaum is a tiny boilerplate/templating utility. It purposely requires little to 
 
 # Install
 
-If you have [go], you can run:
+If you have [go](https://golang.org/), you can run:
 
 ```
 $ go get github.com/flaque/thaum
