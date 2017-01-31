@@ -12,7 +12,7 @@ $ go get github.com/flaque/thaum
 
 or, you can run:
 ```
-$ wget "https://github.com/Flaque/thaum/releases/download/v0.1.0-beta/thaum" -P /usr/local/bin/
+$ curl "https://github.com/Flaque/thaum/releases/download/v0.1.0-beta/thaum" -o "/usr/local/bin/thaum"
 ```
 
 to install the binary into your path.
