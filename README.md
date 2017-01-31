@@ -22,7 +22,7 @@ go get github.com/flaque/thaum
 Your templates go in a folder called `thaum_files`. Thaum will look up the file
 tree for the nearest `thaum_files` folder and use that one for your command.
 
-## Setup
+## Creating a Template
 Create your thaum_files in your root project.
 
 ```
