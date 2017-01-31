@@ -4,12 +4,34 @@ Thaum is a tiny boilerplate/templating utility. It purposely requires little to 
 
 # Install
 
-At the moment, you can install either by downloading the binary from the
-github releases, or using `go`, you can run:
+If you have [go], you can run:
 
 ```
-go get github.com/flaque/thaum
+$ go get github.com/flaque/thaum
 ```
+
+or, you can run:
+```
+$ wget "https://github.com/Flaque/thaum/releases/download/v0.1.0-beta/thaum" -P /usr/local/bin/
+```
+
+to install the binary into your path.
+
+
+### If you have problems
+If you try running `$ thaum` and get an error that says something like:
+
+```
+-bash: /usr/local/bin/thaum: Permission denied
+```
+
+You might [need to add permissions](http://superuser.com/questions/717663/permission-denied-when-trying-to-cd-usr-local-bin-from-terminal/717683) to your bin via:
+
+```
+$ sudo chmod -R 755 /usr/local/bin
+```
+
+And all should work.
 
 # Features
 
