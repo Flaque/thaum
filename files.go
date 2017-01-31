@@ -86,7 +86,7 @@ func createCompiledFile(inputPath string, outputPath string, name string) {
 		log.Fatal(err)
 	}
 
-	fmt.Printf("Created file: %s\n", outputPath)
+	WriteLog("Created file: " + outputPath)
 }
 
 func compileTemplate(inputPath string, template string, name string) error {
@@ -104,7 +104,8 @@ func compileTemplate(inputPath string, template string, name string) error {
 	}
 
 	if exists(outputPath) {
-		log.Fatal(ErrNoOverwrite)
+		ErrorAsObjectLog(ErrNoOverwrite)
+		os.Exit(1)
 	}
 
 	if stat.IsDir() {
@@ -113,7 +114,7 @@ func compileTemplate(inputPath string, template string, name string) error {
 			log.Fatal(err)
 		}
 
-		fmt.Printf("Created folder: %s\n", outputPath)
+		WriteLog("Created folder: " + outputPath)
 	} else {
 		createCompiledFile(inputPath, outputPath, name)
 	}
@@ -126,14 +127,18 @@ func compile(template string, name string) {
 
 	thaumPath, err := existsAbove(cwd(), THAUM_FILES)
 	if err != nil {
-		log.Fatal(err)
+		ErrorAsObjectLog(err)
+		return
 	}
-	fmt.Printf("Using thaum_files at: %s\n", thaumPath)
+
+	SearchLog(fmt.Sprintf("Using thaum_files at: %q", thaumPath))
 
 	// Find the path for the template; make sure template exists
 	path, err := findTemplate(template, thaumPath)
+
 	if err != nil {
-		log.Fatal(err)
+		ErrorAsObjectLog(err)
+		return
 	}
 
 	// Create Walk function
