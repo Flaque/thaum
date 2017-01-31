@@ -2,6 +2,15 @@
 
 Thaum is a tiny boilerplate/templating utility. It purposely requires little to no configuration and does not require you to have anything more than a [mustache](http://mustache.github.io/) template to make a boilerplate. (Read: No script.)
 
+# Install
+
+At the moment, you can install either by downloading the binary from the
+github releases, or using `go`, you can run:
+
+```
+go get github.com/flaque/thaum
+```
+
 # Features
 
 - No configuration.
