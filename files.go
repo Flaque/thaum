@@ -9,6 +9,7 @@ import (
 	"strings"
 	mustache "github.com/Flaque/thaum/mustache"
 	output "github.com/Flaque/thaum/output"
+	thaumErrors "github.com/Flaque/thaum/errors"
 )
 
 // Global Afero Filesystem variable
@@ -33,7 +34,7 @@ func existsAbove(from string, query string) (string, error) {
 
 	// We've hit root!
 	if path.Join(from, "../") == from {
-		return "", ErrNoTemplateFolderAnywhere
+		return "", thaumErrors.NoTemplateFolderAnywhere
 	}
 
 	// Search in parent directory
@@ -55,13 +56,13 @@ func findTemplate(template string, thaumPath string) (string, error) {
 	// Check if thaum_files folder exists
 	path := thaumPath
 	if !exists(path) {
-		return "", ErrNoTemplateFolder
+		return "", thaumErrors.NoTemplateFolder
 	}
 
 	// Check if this template exists
 	path = fmt.Sprintf("%s/%s", path, template)
 	if !exists(path) {
-		return "", ErrNoTemplate
+		return "", thaumErrors.NoTemplate
 	}
 
 	return path, nil // Success!
@@ -106,7 +107,7 @@ func compileTemplate(inputPath string, template string, name string) error {
 	}
 
 	if exists(outputPath) {
-		output.ErrorAsObject(ErrNoOverwrite)
+		output.ErrorAsObject(thaumErrors.NoOverwrite)
 		os.Exit(1)
 	}
 

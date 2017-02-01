@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 	"fmt"
 	. "github.com/franela/goblin"
+	thaumErrors "github.com/Flaque/thaum/errors"
 )
 
 // Keeps track of files that we've used so we can clean up.
@@ -94,7 +95,7 @@ func TestExistsAbove(t *testing.T) {
 		g.It("should return err if the folder does not exist above", func() {
 			query := "IDontExistTrustMe"
 			_, err := existsAbove(subsubDir, query)
-			g.Assert(err).Equal(ErrNoTemplateFolderAnywhere)
+			g.Assert(err).Equal(thaumErrors.NoTemplateFolderAnywhere)
 		})
 	})
 }
