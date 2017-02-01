@@ -1,5 +1,4 @@
-# Thaum
-
+# Thaum ☄️
 Thaum is a tiny boilerplate/templating utility. It purposely requires little to no configuration and does not require you to have anything more than a [mustache](http://mustache.github.io/) template to make a boilerplate. (Read: No script.)
 
 # Install
