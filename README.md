@@ -37,7 +37,7 @@ And all should work.
 
 - No configuration.
 - Global templates and git included project templates.
-- Compiles mustache in paths for files like `{{name}}.spec.js`.
+- Compiles mustache in paths for files like `{% raw %}{{name}}{% endraw %}.spec.js`.
 
 # Usage
 
