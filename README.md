@@ -68,7 +68,7 @@ In that file, you can put something like this:
 ```
 import "allMyThings";
 
-export class {{name}} {
+export class {% raw %}{{name}}{% endraw %} {
   constructor(foo, bar) {
     //do something
   }
