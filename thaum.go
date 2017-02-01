@@ -6,6 +6,7 @@ import (
 
 	"github.com/urfave/cli"
 	output "github.com/Flaque/thaum/output"
+	constants "github.com/Flaque/thaum/constants"
 )
 
 // Called when thaum is actually run.
@@ -29,7 +30,7 @@ func onRun(c *cli.Context) error {
 }
 
 func main() {
-	cli.AppHelpTemplate = HELP_TEMPLATE
+	cli.AppHelpTemplate = constants.HelpTemplate
 
 	app := cli.NewApp()
 	app.Name = "thaum"

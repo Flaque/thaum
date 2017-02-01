@@ -10,6 +10,7 @@ import (
 	mustache "github.com/Flaque/thaum/mustache"
 	output "github.com/Flaque/thaum/output"
 	thaumErrors "github.com/Flaque/thaum/errors"
+	constants "github.com/Flaque/thaum/constants"
 )
 
 // Global Afero Filesystem variable
@@ -68,10 +69,10 @@ func findTemplate(template string, thaumPath string) (string, error) {
 	return path, nil // Success!
 }
 
-// Strips a real path of style `<THAUM_FILES>/<template>/blahblah`
+// Strips a real path of style `<thaum_files>/<template>/blahblah`
 // to just `blahblah`
 func stripTemplatePrefix(template string, path string) string {
-	splitPoint := fmt.Sprintf("%s/%s", THAUM_FILES, template)
+	splitPoint := fmt.Sprintf("%s/%s", constants.ThaumFiles, template)
 	partialPath := strings.Split(path, splitPoint)[1]
 	return strings.TrimPrefix(partialPath, "/")
 }
@@ -128,7 +129,7 @@ func compileTemplate(inputPath string, template string, name string) error {
 // Compiles a template and moves it over
 func compile(template string, name string) {
 
-	thaumPath, err := existsAbove(cwd(), THAUM_FILES)
+	thaumPath, err := existsAbove(cwd(), constants.ThaumFiles)
 	if err != nil {
 		output.ErrorAsObject(err)
 		return

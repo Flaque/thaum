@@ -1,7 +1,7 @@
-package main
+package constants
 
-const THAUM_FILES = "thaum_files"
-const HELP_TEMPLATE = `
+const ThaumFiles = "thaum_files"
+const HelpTemplate = `
 NAME:
   {{.Name}} - {{.Usage}}
 
