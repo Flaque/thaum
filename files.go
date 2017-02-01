@@ -8,6 +8,7 @@ import (
 	"path"
 	"strings"
 	mustache "github.com/Flaque/thaum/mustache"
+	output "github.com/Flaque/thaum/output"
 )
 
 // Global Afero Filesystem variable
@@ -87,7 +88,7 @@ func createCompiledFile(inputPath string, outputPath string, name string) {
 		log.Fatal(err)
 	}
 
-	WriteLog("Created file: " + outputPath)
+	output.Write("Created file: " + outputPath)
 }
 
 func compileTemplate(inputPath string, template string, name string) error {
@@ -105,7 +106,7 @@ func compileTemplate(inputPath string, template string, name string) error {
 	}
 
 	if exists(outputPath) {
-		ErrorAsObjectLog(ErrNoOverwrite)
+		output.ErrorAsObject(ErrNoOverwrite)
 		os.Exit(1)
 	}
 
@@ -115,7 +116,7 @@ func compileTemplate(inputPath string, template string, name string) error {
 			log.Fatal(err)
 		}
 
-		WriteLog("Created folder: " + outputPath)
+		output.Write("Created folder: " + outputPath)
 	} else {
 		createCompiledFile(inputPath, outputPath, name)
 	}
@@ -128,17 +129,17 @@ func compile(template string, name string) {
 
 	thaumPath, err := existsAbove(cwd(), THAUM_FILES)
 	if err != nil {
-		ErrorAsObjectLog(err)
+		output.ErrorAsObject(err)
 		return
 	}
 
-	SearchLog(fmt.Sprintf("Using thaum_files at: %q", thaumPath))
+	output.Search(fmt.Sprintf("Using thaum_files at: %q", thaumPath))
 
 	// Find the path for the template; make sure template exists
 	path, err := findTemplate(template, thaumPath)
 
 	if err != nil {
-		ErrorAsObjectLog(err)
+		output.ErrorAsObject(err)
 		return
 	}
 

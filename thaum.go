@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/urfave/cli"
+	output "github.com/Flaque/thaum/output"
 )
 
 // Called when thaum is actually run.
@@ -18,7 +19,7 @@ func onRun(c *cli.Context) error {
 	}
 
 	if name == "" {
-		ErrorLog(fmt.Sprintf("Thaum requires a name for your %q template. Example: \n\n $ thaum <template> <name> ", template))
+		output.Error(fmt.Sprintf("Thaum requires a name for your %q template. Example: \n\n $ thaum <template> <name> ", template))
 		return nil
 	}
 
