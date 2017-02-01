@@ -12,7 +12,6 @@ $ go get github.com/flaque/thaum
 
 or, you can run:
 ```
-<<<<<<< HEAD
 $ curl "https://github.com/Flaque/thaum/releases/download/v0.2.0-beta/thaum" -o "/usr/local/bin/thaum"
 ```
 
