@@ -18,7 +18,7 @@ func onRun(c *cli.Context) error {
 	}
 
 	if name == "" {
-		ErrorLog(fmt.Sprintf("Thaum requires a name for your %q template.", template))
+		ErrorLog(fmt.Sprintf("Thaum requires a name for your %q template. Example: \n\n $ thaum <template> <name> ", template))
 		return nil
 	}
 
