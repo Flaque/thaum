@@ -7,6 +7,7 @@ import (
 	"os"
 	"path"
 	"strings"
+	mustache "github.com/Flaque/thaum/mustache"
 )
 
 // Global Afero Filesystem variable
@@ -80,7 +81,7 @@ func createCompiledFile(inputPath string, outputPath string, name string) {
 		log.Fatal(err)
 	}
 
-	content := renderFile(inputPath, name)
+	content := mustache.RenderFile(inputPath, name)
 	_, err = file.WriteString(content)
 	if err != nil {
 		log.Fatal(err)
@@ -96,7 +97,7 @@ func compileTemplate(inputPath string, template string, name string) error {
 	}
 
 	outputPath := stripTemplatePrefix(template, inputPath)
-	outputPath = render(outputPath, name) // Compile any {{}}s in paths
+	outputPath = mustache.Render(outputPath, name) // Compile any {{}}s in paths
 
 	// Skip root
 	if outputPath == "." || outputPath == "" {
