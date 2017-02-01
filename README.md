@@ -4,7 +4,7 @@ Thaum is a tiny boilerplate/templating utility. It purposely requires little to 
 
 # Install
 
-If you have [go], you can run:
+If you have [go](https://golang.org/), you can run:
 
 ```
 $ go get github.com/flaque/thaum
@@ -12,7 +12,8 @@ $ go get github.com/flaque/thaum
 
 or, you can run:
 ```
-$ wget "https://github.com/Flaque/thaum/releases/download/v0.2.0-beta/thaum" -P /usr/local/bin/
+<<<<<<< HEAD
+$ curl "https://github.com/Flaque/thaum/releases/download/v0.2.0-beta/thaum" -o "/usr/local/bin/thaum"
 ```
 
 to install the binary into your path.
