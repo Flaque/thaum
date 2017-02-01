@@ -1,4 +1,4 @@
-package main
+package files
 
 import (
 	"fmt"
@@ -127,7 +127,7 @@ func compileTemplate(inputPath string, template string, name string) error {
 }
 
 // Compiles a template and moves it over
-func compile(template string, name string) {
+func Compile(template string, name string) {
 
 	thaumPath, err := existsAbove(cwd(), constants.ThaumFiles)
 	if err != nil {

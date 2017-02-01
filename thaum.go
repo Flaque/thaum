@@ -7,6 +7,7 @@ import (
 	"github.com/urfave/cli"
 	output "github.com/Flaque/thaum/output"
 	constants "github.com/Flaque/thaum/constants"
+	files "github.com/Flaque/thaum/files"
 )
 
 // Called when thaum is actually run.
@@ -24,7 +25,7 @@ func onRun(c *cli.Context) error {
 		return nil
 	}
 
-	compile(template, name)
+	files.Compile(template, name)
 
 	return nil
 }
