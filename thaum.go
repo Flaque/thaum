@@ -34,7 +34,7 @@ func main() {
 	app.Name = "thaum"
 	app.Usage = "Generate micro-boilerplates"
 	app.Action = onRun
-	app.Version = "0.1.0"
+	app.Version = "0.2.0"
 
 	app.Run(os.Args)
 }
