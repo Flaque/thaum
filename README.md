@@ -12,26 +12,10 @@ $ go get github.com/flaque/thaum
 or, you can run:
 
 ```
-$ curl "https://github.com/Flaque/thaum/releases/download/v0.2.0-beta/thaum" -o "/usr/local/bin/thaum"
+$ wget "https://github.com/Flaque/thaum/releases/download/v0.2.0-beta/thaum" -O "/usr/local/bin/thaum" && sudo chmod +x /usr/local/bin/thaum
 ```
 
 to install the binary into your path.
-
-
-### If you have problems
-If you try running `$ thaum` and get an error that says something like:
-
-```
--bash: /usr/local/bin/thaum: Permission denied
-```
-
-You might [need to add permissions](http://superuser.com/questions/717663/permission-denied-when-trying-to-cd-usr-local-bin-from-terminal/717683) to your bin via:
-
-```
-$ sudo chmod -R 755 /usr/local/bin
-```
-
-And all should work.
 
 # Features
 
