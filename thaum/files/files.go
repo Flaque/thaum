@@ -7,10 +7,10 @@ import (
 	"os"
 	"path"
 	"strings"
-	mustache "github.com/Flaque/thaum/src/mustache"
-	output "github.com/Flaque/thaum/src/output"
-	thaumErrors "github.com/Flaque/thaum/src/errors"
-	constants "github.com/Flaque/thaum/src/constants"
+	mustache "github.com/Flaque/thaum/thaum/mustache"
+	output "github.com/Flaque/thaum/thaum/output"
+	thaumErrors "github.com/Flaque/thaum/thaum/errors"
+	constants "github.com/Flaque/thaum/thaum/constants"
 )
 
 // Global Afero Filesystem variable
