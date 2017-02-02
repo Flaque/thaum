@@ -5,9 +5,9 @@ import (
 	"fmt"
 
 	"github.com/urfave/cli"
-	output "github.com/Flaque/thaum/src/output"
-	constants "github.com/Flaque/thaum/src/constants"
-	files "github.com/Flaque/thaum/src/files"
+	output "github.com/Flaque/thaum/thaum/output"
+	constants "github.com/Flaque/thaum/thaum/constants"
+	files "github.com/Flaque/thaum/thaum/files"
 )
 
 // Called when thaum is actually run.
