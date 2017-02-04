@@ -1,6 +1,13 @@
 # Thaum 🔮
 Thaum is a tiny boilerplate/templating utility. It purposely requires little to no configuration and does not require you to have anything more than a [mustache](http://mustache.github.io/) template to make a boilerplate. (Read: No script.)
 
+![screencapture](http://evanconrad.com/ThaumExample.gif)
+
+# Features
+- No configuration.
+- Global templates and git included project templates.
+- Compiles mustache in paths for files like `{{name}}.spec.js`.
+
 # Install
 
 If you have [go](https://golang.org/), you can run:
@@ -16,12 +23,6 @@ $ wget "https://github.com/Flaque/thaum/releases/download/v0.3.0-beta/thaum" -O 
 ```
 
 to install the binary into your path.
-
-# Features
-
-- No configuration.
-- Global templates and git included project templates.
-- Compiles mustache in paths for files like `{{name}}.spec.js`.
 
 # Usage
 
