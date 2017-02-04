@@ -20,3 +20,8 @@ VERSION:
   {{.Version}}
 
 `
+
+// Output statements
+const NotifyThaumFiles  = "Using thaum_files at: "
+const NotifyCreatedFile = "Created file: "
+const NotifyCreatedDir  = "Created dir: "

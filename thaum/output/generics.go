@@ -1,3 +1,7 @@
+/**
+ * This file is for generic message types. Not specific messages.
+ */
+
 package output
 
 import (
@@ -8,11 +12,11 @@ import (
 
 var (
   warn = (ct.Fg(ct.Red)).Paint
-  highlight = (ct.Fg(ct.Blue) | ct.Bold).Paint
+  highlight = (ct.Fg(ct.BoldCyan) | ct.Bold).Paint
 )
 
 func Error(text string) {
-  fmt.Println(warn(padUtf8.Right("🚨  Error:", 10, " ")), text)
+  fmt.Println(warn(padUtf8.Left("🚨  Error:", 12, " ")), text)
 }
 
 func ErrorAsObject(err error) {
@@ -25,4 +29,8 @@ func Search(text string) {
 
 func Write(text string) {
   fmt.Println("✍️  " + text)
+}
+
+func Space() {
+  fmt.Print("\n")
 }

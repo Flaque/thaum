@@ -1,4 +1,4 @@
-package main
+package {{package}}
 
 import (
 	. "github.com/franela/goblin"
