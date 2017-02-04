@@ -50,7 +50,7 @@ $ touch thaum_files/myTemplate/myWidget.js
 In that file, you can put something like this:
 
 ```
-import "allMyThings";
+import {{package}};
 
 export class {{name}} {
   constructor(foo, bar) {
@@ -64,5 +64,16 @@ export class {{name}} {
 Once you have a template, you can run `thaum` like so:
 
 ```
-thaum myTemplate theName
+thaum myTemplate
+```
+
+and thaum will ask you to fill in the details:
+
+```
+🔍  Using thaum_files at: "/Users/Flaque/thaum-test/thaum_files"
+
+     package: foo
+        name: bang
+
+✍️  Created file: myWidget.js
 ```
