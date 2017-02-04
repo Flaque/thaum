@@ -64,7 +64,7 @@ export class {{name}} {
 Once you have a template, you can run `thaum` like so:
 
 ```
-thaum myTemplate
+$ thaum myTemplate
 ```
 
 and thaum will ask you to fill in the details:
