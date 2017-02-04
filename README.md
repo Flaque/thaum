@@ -12,7 +12,7 @@ $ go get github.com/flaque/thaum
 or, you can run:
 
 ```
-$ wget "https://github.com/Flaque/thaum/releases/download/v0.2.0-beta/thaum" -O "/usr/local/bin/thaum" && sudo chmod +x /usr/local/bin/thaum
+$ wget "https://github.com/Flaque/thaum/releases/download/v0.3.0-beta/thaum" -O "/usr/local/bin/thaum" && sudo chmod +x /usr/local/bin/thaum
 ```
 
 to install the binary into your path.
@@ -50,7 +50,7 @@ $ touch thaum_files/myTemplate/myWidget.js
 In that file, you can put something like this:
 
 ```
-import "allMyThings";
+import {{package}};
 
 export class {% raw %}{{name}}{% endraw %} {
   constructor(foo, bar) {
@@ -64,5 +64,16 @@ export class {% raw %}{{name}}{% endraw %} {
 Once you have a template, you can run `thaum` like so:
 
 ```
-thaum myTemplate theName
+$ thaum myTemplate
+```
+
+and thaum will ask you to fill in the details:
+
+```
+🔍  Using thaum_files at: "/Users/Flaque/thaum-test/thaum_files"
+
+     package: foo
+        name: bang
+
+✍️  Created file: myWidget.js
 ```
