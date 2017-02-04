@@ -50,7 +50,7 @@ $ touch thaum_files/myTemplate/myWidget.js
 In that file, you can put something like this:
 
 ```
-import {{package}};
+import {% raw %}{{package}}{% endraw %};
 
 export class {% raw %}{{name}}{% endraw %} {
   constructor(foo, bar) {
