@@ -1,11 +1,11 @@
 package files
 
 import (
-	"testing"
-	"path/filepath"
-	. "github.com/franela/goblin"
 	thaumErrors "github.com/Flaque/thaum/thaum/errors"
 	testUtil "github.com/Flaque/thaum/thaum/testingutil"
+	. "github.com/franela/goblin"
+	"path/filepath"
+	"testing"
 )
 
 // Tests the exists() function
@@ -30,10 +30,10 @@ func TestExistsAbove(t *testing.T) {
 	defer testUtil.RemoveAllTestFiles(t)
 
 	// Create our test environment
-	outerDir  := testUtil.TmpDir("")       // Outermost directory
-	queryDir  := testUtil.TmpDir(outerDir) // What we're looking for
-	subDir    := testUtil.TmpDir(outerDir) // Some random directory
-	subsubDir := testUtil.TmpDir(subDir)   // Another random dir inside the subDir
+	outerDir := testUtil.TmpDir("")       // Outermost directory
+	queryDir := testUtil.TmpDir(outerDir) // What we're looking for
+	subDir := testUtil.TmpDir(outerDir)   // Some random directory
+	subsubDir := testUtil.TmpDir(subDir)  // Another random dir inside the subDir
 
 	// Run tests
 	g := Goblin(t)

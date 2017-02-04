@@ -2,13 +2,13 @@ package files
 
 import (
 	"fmt"
+	thaumErrors "github.com/Flaque/thaum/thaum/errors"
+	mustache "github.com/Flaque/thaum/thaum/mustache"
+	output "github.com/Flaque/thaum/thaum/output"
+	util "github.com/Flaque/thaum/thaum/util"
 	"github.com/spf13/afero"
 	"log"
 	"os"
-	mustache "github.com/Flaque/thaum/thaum/mustache"
-	output "github.com/Flaque/thaum/thaum/output"
-	thaumErrors "github.com/Flaque/thaum/thaum/errors"
-	util "github.com/Flaque/thaum/thaum/util"
 )
 
 // Global Afero Filesystem variable
@@ -100,7 +100,7 @@ func getTemplateFromFiles(path string, templateName string) Template {
 		nameSet = util.AddStringsToSet(names, nameSet)
 
 		filesToCompile = append(filesToCompile,
-				TemplateFile{templateName, inputPath, emptyStringMap(names)})
+			TemplateFile{templateName, inputPath, emptyStringMap(names)})
 		return nil
 	}
 

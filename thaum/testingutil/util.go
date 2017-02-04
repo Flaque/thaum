@@ -1,9 +1,9 @@
 package testingutil
 
 import (
-	"testing"
-	"github.com/spf13/afero"
 	"fmt"
+	"github.com/spf13/afero"
+	"testing"
 )
 
 // Keeps track of files that we've used so we can clean up.
@@ -12,7 +12,7 @@ var AppFs afero.Fs = afero.NewOsFs()
 
 /*
 Creates a tmp directory for us to use.
- */
+*/
 func TmpDir(dir string) string {
 	name, err := afero.TempDir(AppFs, dir, "dir")
 	if err != nil {
@@ -36,7 +36,7 @@ func TmpThaumFiles(dir string) string {
 
 /*
 Creates a tmp file for us to use when testing
- */
+*/
 func TmpFile(dir string) afero.File {
 	file, err := afero.TempFile(AppFs, dir, "file")
 	if err != nil {
@@ -50,7 +50,7 @@ func TmpFile(dir string) afero.File {
 
 /*
 Removes all files in our test registry
- */
+*/
 func RemoveAllTestFiles(t *testing.T) {
 	for _, path := range testRegistry {
 		if err := AppFs.RemoveAll(path); err != nil {

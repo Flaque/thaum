@@ -22,6 +22,6 @@ VERSION:
 `
 
 // Output statements
-const NotifyThaumFiles  = "Using thaum_files at: "
+const NotifyThaumFiles = "Using thaum_files at: "
 const NotifyCreatedFile = "Created file: "
-const NotifyCreatedDir  = "Created dir: "
+const NotifyCreatedDir = "Created dir: "
