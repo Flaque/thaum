@@ -10,9 +10,9 @@ func TestRender(t *testing.T) {
 	g.Describe("Mustache render()", func() {
 		g.It("Should correctly compile a template", func() {
 			template := "Hello {{firstName}} {{lastName}}!"
-			variables := map[string]string {
-				"firstName" : "test",
-				"lastName"  : "mcTest",
+			variables := map[string]string{
+				"firstName": "test",
+				"lastName":  "mcTest",
 			}
 			g.Assert(Render(template, variables)).Equal("Hello test mcTest!")
 		})
@@ -20,7 +20,7 @@ func TestRender(t *testing.T) {
 }
 
 // Helper function for TestFindVariables
-func contains(list []string, a string) bool{
+func contains(list []string, a string) bool {
 	for _, b := range list {
 		if b == a {
 			return true

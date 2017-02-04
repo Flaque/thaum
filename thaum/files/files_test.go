@@ -1,10 +1,9 @@
 package files
 
 import (
+	testUtil "github.com/Flaque/thaum/thaum/testingutil"
 	. "github.com/franela/goblin"
 	"testing"
-	testUtil "github.com/Flaque/thaum/thaum/testingutil"
-
 )
 
 func TestCreateCompiledFile(t *testing.T) {
@@ -13,7 +12,7 @@ func TestCreateCompiledFile(t *testing.T) {
 	g := Goblin(t)
 	g.Describe("createCompiledFile()", func() {
 		g.It("Should create a file", func() {
-			inPath  := testUtil.TmpFile(testUtil.TmpDir("")).Name()
+			inPath := testUtil.TmpFile(testUtil.TmpDir("")).Name()
 			outPath := testUtil.TmpDir("") + "/test"
 
 			createCompiledFile(TemplateFile{"", inPath, make(map[string]string)},

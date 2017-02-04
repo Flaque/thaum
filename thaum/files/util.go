@@ -1,14 +1,14 @@
 package files
 
 import (
-  "fmt"
+	"fmt"
+	constants "github.com/Flaque/thaum/thaum/constants"
+	thaumErrors "github.com/Flaque/thaum/thaum/errors"
 	"github.com/spf13/afero"
 	"log"
-  "os"
+	"os"
 	"path"
 	"strings"
-  thaumErrors "github.com/Flaque/thaum/thaum/errors"
-  constants "github.com/Flaque/thaum/thaum/constants"
 )
 
 // Returns true if the path is a real file that exists

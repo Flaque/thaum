@@ -6,7 +6,6 @@ import (
 	"strings"
 )
 
-
 // Renders a mustache template string with the "name" parameter.
 func Render(template string, variables map[string]string) string {
 	return mustache.Render(template, variables)

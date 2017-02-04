@@ -1,19 +1,19 @@
 package files
 
 import (
-	output "github.com/Flaque/thaum/thaum/output"
 	constants "github.com/Flaque/thaum/thaum/constants"
+	output "github.com/Flaque/thaum/thaum/output"
 )
 
 type Template struct {
-	Dirs []string
-	Files []TemplateFile
+	Dirs      []string
+	Files     []TemplateFile
 	Variables map[string]string
-	Name string
+	Name      string
 }
 
 type TemplateFile struct {
-	name string
+	name      string
 	inputPath string
 	variables map[string]string
 }
@@ -55,7 +55,7 @@ func validateTemplatePath(template string) (string, error) {
 		return "", err
 	}
 
-  // Path is good, tell the user and return path
+	// Path is good, tell the user and return path
 	output.UsingThaumFilesAt(thaumPath)
 	return path, nil
 }
