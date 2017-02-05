@@ -1,7 +1,6 @@
 package files
 
 import (
-	constants "github.com/Flaque/thaum/thaum/constants"
 	output "github.com/Flaque/thaum/thaum/output"
 )
 
@@ -44,7 +43,7 @@ func GetTemplate(template string) (Template, error) {
 func validateTemplatePath(template string) (string, error) {
 
 	// Make sure the thaum_files exists
-	thaumPath, err := existsAbove(cwd(), constants.ThaumFiles)
+	thaumPath, err := validThaumPath()
 	if err != nil {
 		return "", err
 	}

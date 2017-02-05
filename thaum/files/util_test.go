@@ -6,6 +6,7 @@ import (
 	. "github.com/franela/goblin"
 	"path/filepath"
 	"testing"
+	"os"
 )
 
 // Tests the exists() function
@@ -64,6 +65,22 @@ func TestCwd(t *testing.T) {
 	g.Describe("cwd()", func() {
 		g.It("should return... something?", func() {
 			g.Assert(len(cwd()) > 0).IsTrue()
+		})
+	})
+}
+
+func TestThaumTemplates(t *testing.T) {
+	defer testUtil.RemoveAllTestFiles(t)
+
+	g := Goblin(t)
+	g.Describe("ThaumTemplates()", func() {
+		g.It("correctly returns available templates", func() {
+			mySrc, _, template := testUtil.TmpThaumEnvironment("")
+
+			os.Chdir(mySrc)
+			ts, err := ThaumTemplates()
+			g.Assert(err).Equal(nil)
+			g.Assert(ts[0]).Equal(filepath.Base(template))
 		})
 	})
 }

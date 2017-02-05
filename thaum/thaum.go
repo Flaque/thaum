@@ -30,13 +30,19 @@ func onRun(c *cli.Context) error {
 	template := c.Args().Get(0)
 
 	if len(c.Args()) == 0 {
-		cli.ShowAppHelp(c)
+		templateNames, err := files.ThaumTemplates()
+		if err != nil {
+			output.ErrorAsObject(err)
+			os.Exit(1)
+		}
+		output.ListTemplates(templateNames)
 		return nil
 	}
 
 	templateStruct, err := files.GetTemplate(template)
 	if err != nil {
 		output.ErrorAsObject(err)
+		os.Exit(1)
 	}
 
 	templateStruct = askForVariables(templateStruct)
@@ -52,7 +58,7 @@ func buildApp() *cli.App {
 	app.Name = "thaum"
 	app.Usage = "Generate micro-boilerplates"
 	app.Action = onRun
-	app.Version = "0.2.0"
+	app.Version = "0.4.0"
 	return app
 }
 

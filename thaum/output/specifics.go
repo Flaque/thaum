@@ -25,3 +25,10 @@ func CreatedDir(path string) {
 func VariableLabel(variable string) {
 	fmt.Print(highlight(padUtf8.Left(variable, 12, " ") + ": "))
 }
+
+func ListTemplates(templates []string) {
+	fmt.Println("Templates Available:")
+	for _, t := range templates {
+		fmt.Println(highlight(TAB + t))
+	}
+}

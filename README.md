@@ -1,5 +1,5 @@
 # Thaum 🔮
-Thaum is a tiny boilerplate/templating utility. It purposely requires little to no configuration and does not require you to have anything more than a [mustache](http://mustache.github.io/) template to make a boilerplate. (Read: No script.)
+Thaum is a boilerplate and scaffolding command line utility. It purposely requires little to no configuration and does not require you to have anything more than a [mustache](http://mustache.github.io/) template to make a boilerplate. (Read: No script.)
 
 ![screencapture](http://evanconrad.com/thaum.gif)
 
@@ -19,7 +19,7 @@ $ go get github.com/flaque/thaum
 or, you can run:
 
 ```
-$ wget "https://github.com/Flaque/thaum/releases/download/v0.3.0-beta/thaum" -O "/usr/local/bin/thaum" && sudo chmod +x /usr/local/bin/thaum
+$ wget "https://github.com/Flaque/thaum/releases/download/v0.4.0-beta/thaum" -O "/usr/local/bin/thaum" && sudo chmod +x /usr/local/bin/thaum
 ```
 
 to install the binary into your path.
@@ -77,4 +77,20 @@ and thaum will ask you to fill in the details:
         name: bang
 
 ✍️  Created file: myWidget.js
+```
+
+You can also list all templates that exist by typing `thaum`.
+
+```
+$ thaum
+Templates Available:
+  component
+  growler
+  test
+```
+
+If you need help, you can type `thaum -h` to see the help screen.
+
+```
+$ thaum -h
 ```
