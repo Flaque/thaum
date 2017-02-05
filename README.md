@@ -78,3 +78,19 @@ and thaum will ask you to fill in the details:
 
 ✍️  Created file: myWidget.js
 ```
+
+You can also list all templates that exist by typing `thaum`.
+
+```
+$ thaum
+Templates Available:
+  component
+  growler
+  test
+```
+
+If you need help, you can type `thaum -h` to see the help screen.
+
+```
+$ thaum -h
+```
