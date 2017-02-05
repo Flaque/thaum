@@ -58,7 +58,7 @@ func buildApp() *cli.App {
 	app.Name = "thaum"
 	app.Usage = "Generate micro-boilerplates"
 	app.Action = onRun
-	app.Version = "0.2.0"
+	app.Version = "0.4.0"
 	return app
 }
 
