@@ -80,3 +80,30 @@ func emptyStringMap(strs []string) map[string]string {
 	}
 	return vars
 }
+
+// Makes sure that there is a thaum_files somewhere
+func validThaumPath() (string, error) {
+	return existsAbove(cwd(), constants.ThaumFiles)
+}
+
+// Returns the available thaum templates
+func ThaumTemplates() ([]string, error){
+	thaumPath, err := validThaumPath()
+	if err != nil {
+		return []string{}, err
+	}
+
+	files, err := afero.ReadDir(AppFs, thaumPath)
+	if err != nil {
+		return []string{}, err
+	}
+
+	var names []string
+	for _, f := range files {
+		if f.IsDir() {
+			names = append(names, f.Name())
+		}
+	}
+
+	return names, nil
+}

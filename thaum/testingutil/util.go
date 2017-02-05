@@ -49,6 +49,19 @@ func TmpFile(dir string) afero.File {
 }
 
 /*
+Creates a temporary thaum-test environment for us
+ */
+func TmpThaumEnvironment(dir string) (string, string, string) {
+
+	myLocation  := TmpDir(dir)
+	mySrc       := TmpDir(myLocation)
+	thaum_files := TmpThaumFiles(myLocation)
+	myTemplate  := TmpDir(thaum_files)
+	TmpFile(myTemplate)
+	return mySrc, thaum_files, myTemplate
+}
+
+/*
 Removes all files in our test registry
 */
 func RemoveAllTestFiles(t *testing.T) {

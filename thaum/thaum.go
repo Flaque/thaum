@@ -30,13 +30,19 @@ func onRun(c *cli.Context) error {
 	template := c.Args().Get(0)
 
 	if len(c.Args()) == 0 {
-		cli.ShowAppHelp(c)
+		templateNames, err := files.ThaumTemplates()
+		if err != nil {
+			output.ErrorAsObject(err)
+			os.Exit(1)
+		}
+		output.ListTemplates(templateNames)
 		return nil
 	}
 
 	templateStruct, err := files.GetTemplate(template)
 	if err != nil {
 		output.ErrorAsObject(err)
+		os.Exit(1)
 	}
 
 	templateStruct = askForVariables(templateStruct)

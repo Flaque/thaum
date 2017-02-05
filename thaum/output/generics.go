@@ -15,6 +15,8 @@ var (
 	highlight = (ct.Fg(ct.BoldCyan) | ct.Bold).Paint
 )
 
+var TAB = "  "
+
 func Error(text string) {
 	fmt.Println(warn(padUtf8.Left("🚨  Error:", 12, " ")), text)
 }
