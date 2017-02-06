@@ -2,9 +2,7 @@ package errors
 
 import "errors"
 
-/**
- * Package Level Errors
- */
+// Package Level Errors
 var (
 	NoTemplateFolder         = errors.New("Thaum can't find your thaum_files!")
 	NoTemplate               = errors.New("Thaum can't find that template in your folder.")

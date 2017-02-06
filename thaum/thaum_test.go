@@ -1,31 +1,30 @@
 package main
 
 import (
-	. "github.com/franela/goblin"
-	"testing"
-	"path/filepath"
-	"os"
-	"io"
 	"bytes"
-	"strings"
 	testUtil "github.com/Flaque/thaum/thaum/testingutil"
-
+	. "github.com/franela/goblin"
+	"io"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
 )
 
 // Credit to https://gist.github.com/mindscratch/0faa78bd3c0005d080bf
 func captureStdout(f func()) string {
-  old := os.Stdout
-  r, w, _ := os.Pipe()
-  os.Stdout = w
+	old := os.Stdout
+	r, w, _ := os.Pipe()
+	os.Stdout = w
 
-  f()
+	f()
 
-  w.Close()
-  os.Stdout = old
+	w.Close()
+	os.Stdout = old
 
-  var buf bytes.Buffer
-  io.Copy(&buf, r)
-  return buf.String()
+	var buf bytes.Buffer
+	io.Copy(&buf, r)
+	return buf.String()
 }
 
 var testRegistry []string
@@ -38,18 +37,17 @@ func TestThaum(t *testing.T) {
 	// 	- thaum_files
 	// 		- myTemplate
 	// 	- mySrc
-	myLocation  := testUtil.TmpDir("")
+	myLocation := testUtil.TmpDir("")
 	os.Chdir(myLocation) // Move the working directory to our temp location
 	wd, _ := os.Getwd()
 
-	mySrc       := testUtil.TmpDir(wd)
+	mySrc := testUtil.TmpDir(wd)
 	thaum_files := testUtil.TmpThaumFiles(wd)
-	myTemplate  := testUtil.TmpDir(thaum_files)
+	myTemplate := testUtil.TmpDir(thaum_files)
 	// myFile      := testUtil.TmpFile(myTemplate)
 
 	g := Goblin(t)
 	g.Describe("Running thaum as ", func() {
-
 
 		g.It("thaum myTemplate will mention thaum_files", func() {
 
@@ -66,7 +64,6 @@ func TestThaum(t *testing.T) {
 			// Test that we mentioned which thaum files are being used
 			g.Assert(strings.Contains(text, "Using thaum_files")).Equal(true)
 		})
-
 
 	})
 }
