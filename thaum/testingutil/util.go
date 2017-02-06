@@ -23,6 +23,9 @@ func TmpDir(dir string) string {
 	return name
 }
 
+/*
+Creates a temporary `thaum_files` directory.
+*/
 func TmpThaumFiles(dir string) string {
 	name := dir + "/thaum_files"
 	err := AppFs.Mkdir(name, 0755)
@@ -50,13 +53,12 @@ func TmpFile(dir string) afero.File {
 
 /*
 Creates a temporary thaum-test environment for us
- */
+*/
 func TmpThaumEnvironment(dir string) (string, string, string) {
-
-	myLocation  := TmpDir(dir)
-	mySrc       := TmpDir(myLocation)
+	myLocation := TmpDir(dir)
+	mySrc := TmpDir(myLocation)
 	thaum_files := TmpThaumFiles(myLocation)
-	myTemplate  := TmpDir(thaum_files)
+	myTemplate := TmpDir(thaum_files)
 	TmpFile(myTemplate)
 	return mySrc, thaum_files, myTemplate
 }

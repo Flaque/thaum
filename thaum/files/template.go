@@ -1,9 +1,15 @@
 package files
 
 import (
+	mustache "github.com/Flaque/thaum/thaum/mustache"
 	output "github.com/Flaque/thaum/thaum/output"
+	util "github.com/Flaque/thaum/thaum/util"
+	"github.com/spf13/afero"
+	"os"
 )
 
+// A complete representation of a template that's
+// stored in thaum_files.
 type Template struct {
 	Dirs      []string
 	Files     []TemplateFile
@@ -11,6 +17,7 @@ type Template struct {
 	Name      string
 }
 
+// An individual file inside of the template
 type TemplateFile struct {
 	name      string
 	inputPath string
@@ -28,7 +35,44 @@ func (t Template) Update() Template {
 	return t
 }
 
-// From a template name, gets a template
+// Walks the path folder and returns all the files to compile
+func getTemplateFromFiles(path string, templateName string) Template {
+	var filesToCompile []TemplateFile
+	var dirs []string
+	nameSet := make(map[string]string)
+
+	// Create Walk function
+	walkFn := func(inputPath string, info os.FileInfo, err error) error {
+
+		// Handle dirs
+		if info.IsDir() {
+			names := mustache.FindVariables(inputPath)
+			nameSet = util.AddStringsToSet(names, nameSet)
+			dirs = append(dirs, inputPath)
+			return nil
+		}
+
+		// Ignore DS Stores
+		if IsDsStore(info.Name()) {
+			return nil
+		}
+
+		// Work with files
+		names := getEmptyVarsFromFile(inputPath)
+		nameSet = util.AddStringsToSet(names, nameSet)
+
+		filesToCompile = append(filesToCompile,
+			TemplateFile{templateName, inputPath, emptyStringMap(names)})
+		return nil
+	}
+
+	// Actually walk through here.
+	afero.Walk(AppFs, path, walkFn)
+
+	return Template{dirs, filesToCompile, nameSet, templateName}
+}
+
+// From a template name, returns a complete template
 func GetTemplate(template string) (Template, error) {
 	// Make sure we can actually compile this template
 	path, err := validateTemplatePath(template)

@@ -4,9 +4,9 @@ import (
 	thaumErrors "github.com/Flaque/thaum/thaum/errors"
 	testUtil "github.com/Flaque/thaum/thaum/testingutil"
 	. "github.com/franela/goblin"
+	"os"
 	"path/filepath"
 	"testing"
-	"os"
 )
 
 // Tests the exists() function
@@ -81,6 +81,17 @@ func TestThaumTemplates(t *testing.T) {
 			ts, err := ThaumTemplates()
 			g.Assert(err).Equal(nil)
 			g.Assert(ts[0]).Equal(filepath.Base(template))
+		})
+	})
+}
+
+func TestIsDsStore(t *testing.T) {
+
+	g := Goblin(t)
+	g.Describe("IsDsStore()", func() {
+		g.It("correctly identifies a DS Store filepath", func() {
+			const testPath = "path/to/.DS_Store"
+			g.Assert(IsDsStore(testPath)).Equal(true)
 		})
 	})
 }

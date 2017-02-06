@@ -8,6 +8,7 @@ import (
 	"log"
 	"os"
 	"path"
+	"path/filepath"
 	"strings"
 )
 
@@ -87,7 +88,7 @@ func validThaumPath() (string, error) {
 }
 
 // Returns the available thaum templates
-func ThaumTemplates() ([]string, error){
+func ThaumTemplates() ([]string, error) {
 	thaumPath, err := validThaumPath()
 	if err != nil {
 		return []string{}, err
@@ -106,4 +107,9 @@ func ThaumTemplates() ([]string, error){
 	}
 
 	return names, nil
+}
+
+// Ignores .DS_store
+func IsDsStore(path string) bool {
+	return filepath.Base(path) == ".DS_Store"
 }

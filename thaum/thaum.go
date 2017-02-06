@@ -1,14 +1,14 @@
 package main
 
 import (
-	"os"
 	"bufio"
+	"os"
 	"strings"
 
-	"github.com/urfave/cli"
 	constants "github.com/Flaque/thaum/thaum/constants"
 	files "github.com/Flaque/thaum/thaum/files"
 	output "github.com/Flaque/thaum/thaum/output"
+	"github.com/urfave/cli"
 )
 
 func askForVariables(template files.Template) files.Template {

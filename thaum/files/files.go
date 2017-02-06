@@ -5,7 +5,6 @@ import (
 	thaumErrors "github.com/Flaque/thaum/thaum/errors"
 	mustache "github.com/Flaque/thaum/thaum/mustache"
 	output "github.com/Flaque/thaum/thaum/output"
-	util "github.com/Flaque/thaum/thaum/util"
 	"github.com/spf13/afero"
 	"log"
 	"os"
@@ -76,38 +75,6 @@ func createCompiledDir(outputPath string) {
 func createOutputPath(templateName string, path string, variables map[string]string) string {
 	outputPath := stripTemplatePrefix(path, templateName)
 	return mustache.Render(outputPath, variables)
-}
-
-// Walks the path folder and returns all the files to compile
-func getTemplateFromFiles(path string, templateName string) Template {
-	var filesToCompile []TemplateFile
-	var dirs []string
-	nameSet := make(map[string]string)
-
-	// Create Walk function
-	walkFn := func(inputPath string, info os.FileInfo, err error) error {
-
-		// Handle dirs
-		if info.IsDir() {
-			names := mustache.FindVariables(inputPath)
-			nameSet = util.AddStringsToSet(names, nameSet)
-			dirs = append(dirs, inputPath)
-			return nil
-		}
-
-		// Work with files
-		names := getEmptyVarsFromFile(inputPath)
-		nameSet = util.AddStringsToSet(names, nameSet)
-
-		filesToCompile = append(filesToCompile,
-			TemplateFile{templateName, inputPath, emptyStringMap(names)})
-		return nil
-	}
-
-	// Actually walk through here.
-	afero.Walk(AppFs, path, walkFn)
-
-	return Template{dirs, filesToCompile, nameSet, templateName}
 }
 
 // Returns a variable map with empty items for each name in the path
