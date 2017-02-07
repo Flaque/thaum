@@ -12,6 +12,7 @@ import (
 
 // Global Afero Filesystem variable
 var AppFs afero.Fs = afero.NewOsFs()
+var overwrite bool = false
 
 // Compile a template file
 func compileTemplateFile(f TemplateFile) {
@@ -28,7 +29,7 @@ func compileTemplateFile(f TemplateFile) {
 		return
 	}
 
-	if exists(outputPath) {
+	if exists(outputPath) && overwrite {
 		output.ErrorAsObject(thaumErrors.NoOverwrite)
 		os.Exit(1)
 	}
@@ -88,7 +89,8 @@ func getEmptyVarsFromFile(path string) []string {
 }
 
 // Compiles a template and moves it over
-func Compile(template Template) {
+func Compile(template Template, overwrite bool) {
+	overwrite = overwrite
 
 	for _, d := range template.Dirs {
 		createCompiledDir(createOutputPath(d, template.Name, template.Variables))

@@ -11,14 +11,15 @@ import (
 )
 
 var (
-	warn      = (ct.Fg(ct.Red)).Paint
-	highlight = (ct.Fg(ct.BoldCyan) | ct.Bold).Paint
+	err      = (ct.Fg(ct.Red)).Paint
+	warn       = (ct.Fg(ct.Yellow)).Paint
+	highlight  = (ct.Fg(ct.BoldCyan) | ct.Bold).Paint
 )
 
 var TAB = "  "
 
 func Error(text string) {
-	fmt.Println(warn(padUtf8.Left("🚨  Error:", 12, " ")), text)
+	fmt.Println(err(padUtf8.Left("🚨  Error:", 12, " ")), text)
 }
 
 func ErrorAsObject(err error) {
@@ -35,4 +36,8 @@ func Write(text string) {
 
 func Space() {
 	fmt.Print("\n")
+}
+
+func Warning(text string) {
+	fmt.Println(warn("⚠️  " + text))
 }
