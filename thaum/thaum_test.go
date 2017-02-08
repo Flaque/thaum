@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+  filet "github.com/Flaque/filet"
 )
 
 // Credit to https://gist.github.com/mindscratch/0faa78bd3c0005d080bf
@@ -30,20 +31,20 @@ func captureStdout(f func()) string {
 var testRegistry []string
 
 func TestThaum(t *testing.T) {
-	defer testUtil.RemoveAllTestFiles(t)
+	defer filet.CleanUp(t)
 
 	// Create thaum_files with myTemplate with filepath:
 	// myLocation
 	// 	- thaum_files
 	// 		- myTemplate
 	// 	- mySrc
-	myLocation := testUtil.TmpDir("")
+	myLocation := filet.TmpDir(t, "")
 	os.Chdir(myLocation) // Move the working directory to our temp location
 	wd, _ := os.Getwd()
 
-	mySrc := testUtil.TmpDir(wd)
-	thaum_files := testUtil.TmpThaumFiles(wd)
-	myTemplate := testUtil.TmpDir(thaum_files)
+	mySrc := filet.TmpDir(t, wd)
+	thaum_files := testUtil.TmpThaumFiles(t, wd)
+	myTemplate := filet.TmpDir(t, thaum_files)
 	// myFile      := testUtil.TmpFile(myTemplate)
 
 	g := Goblin(t)

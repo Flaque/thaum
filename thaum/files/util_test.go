@@ -7,16 +7,18 @@ import (
 	"os"
 	"path/filepath"
 	"testing"
+	filet "github.com/Flaque/filet"
+	"github.com/stretchr/testify/assert"
 )
 
 // Tests the exists() function
 func TestExists(t *testing.T) {
-	defer testUtil.RemoveAllTestFiles(t)
+	defer filet.CleanUp(t)
 
 	g := Goblin(t)
 	g.Describe("exists()", func() {
 		g.It("should return true if the file exists", func() {
-			tmp := testUtil.TmpFile("")
+			tmp := filet.TmpFile(t, "", "")
 			g.Assert(exists(tmp.Name())).Equal(true)
 		})
 
@@ -28,13 +30,13 @@ func TestExists(t *testing.T) {
 
 // Tests the existsAbove() function
 func TestExistsAbove(t *testing.T) {
-	defer testUtil.RemoveAllTestFiles(t)
+	defer filet.CleanUp(t)
 
 	// Create our test environment
-	outerDir := testUtil.TmpDir("")       // Outermost directory
-	queryDir := testUtil.TmpDir(outerDir) // What we're looking for
-	subDir := testUtil.TmpDir(outerDir)   // Some random directory
-	subsubDir := testUtil.TmpDir(subDir)  // Another random dir inside the subDir
+	outerDir := filet.TmpDir(t, "")       // Outermost directory
+	queryDir := filet.TmpDir(t, outerDir) // What we're looking for
+	subDir := filet.TmpDir(t, outerDir)   // Some random directory
+	subsubDir := filet.TmpDir(t, subDir)  // Another random dir inside the subDir
 
 	// Run tests
 	g := Goblin(t)
@@ -59,7 +61,7 @@ func TestExistsAbove(t *testing.T) {
 
 // More or less tests cwd()
 func TestCwd(t *testing.T) {
-	defer testUtil.RemoveAllTestFiles(t)
+	defer filet.CleanUp(t)
 
 	g := Goblin(t)
 	g.Describe("cwd()", func() {
@@ -70,12 +72,12 @@ func TestCwd(t *testing.T) {
 }
 
 func TestThaumTemplates(t *testing.T) {
-	defer testUtil.RemoveAllTestFiles(t)
+	defer filet.CleanUp(t)
 
 	g := Goblin(t)
 	g.Describe("ThaumTemplates()", func() {
 		g.It("correctly returns available templates", func() {
-			mySrc, _, template := testUtil.TmpThaumEnvironment("")
+			mySrc, _, template := testUtil.TmpThaumEnvironment(t, "")
 
 			os.Chdir(mySrc)
 			ts, err := ThaumTemplates()
@@ -94,4 +96,9 @@ func TestIsDsStore(t *testing.T) {
 			g.Assert(IsDsStore(testPath)).Equal(true)
 		})
 	})
+}
+
+func TestRemoveThaumExtension(t *testing.T) {
+	assert.Equal(t, RemoveThaumExtension("this.thaum"),
+		"this", true)
 }

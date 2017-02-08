@@ -11,6 +11,8 @@ import (
 	"github.com/urfave/cli"
 )
 
+var overwrite bool
+
 func askForVariables(template files.Template) files.Template {
 	reader := bufio.NewReader(os.Stdin)
 
@@ -25,17 +27,22 @@ func askForVariables(template files.Template) files.Template {
 	return template.Update()
 }
 
+// Lists all available templates
+func listTemplates() {
+	templateNames, err := files.ThaumTemplates()
+	if err != nil {
+		output.ErrorAsObject(err)
+		os.Exit(1)
+	}
+	output.ListTemplates(templateNames)
+}
+
 // Called when thaum is actually run.
 func onRun(c *cli.Context) error {
 	template := c.Args().Get(0)
 
 	if len(c.Args()) == 0 {
-		templateNames, err := files.ThaumTemplates()
-		if err != nil {
-			output.ErrorAsObject(err)
-			os.Exit(1)
-		}
-		output.ListTemplates(templateNames)
+		listTemplates()
 		return nil
 	}
 
@@ -45,8 +52,9 @@ func onRun(c *cli.Context) error {
 		os.Exit(1)
 	}
 
+	if (overwrite) { output.Warning("Thaum will overwrite files. Be careful!") }
 	templateStruct = askForVariables(templateStruct)
-	files.Compile(templateStruct)
+	files.Compile(templateStruct, overwrite)
 
 	return nil
 }
@@ -58,7 +66,15 @@ func buildApp() *cli.App {
 	app.Name = "thaum"
 	app.Usage = "Generate micro-boilerplates"
 	app.Action = onRun
-	app.Version = "0.4.1"
+	app.Version = "0.6.0"
+	app.Flags = []cli.Flag {
+    cli.BoolFlag{
+      Name: "force, f",
+      Usage: "forces overwrite of existing files. Use with caution.",
+			Destination: &overwrite,
+    },
+  }
+
 	return app
 }
 
