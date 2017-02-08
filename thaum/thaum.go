@@ -66,7 +66,7 @@ func buildApp() *cli.App {
 	app.Name = "thaum"
 	app.Usage = "Generate micro-boilerplates"
 	app.Action = onRun
-	app.Version = "0.5.0"
+	app.Version = "0.6.0"
 	app.Flags = []cli.Flag {
     cli.BoolFlag{
       Name: "force, f",

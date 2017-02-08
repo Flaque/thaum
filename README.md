@@ -19,7 +19,7 @@ $ go get github.com/flaque/thaum
 or, you can run:
 
 ```
-$ wget "https://github.com/Flaque/thaum/releases/download/v0.5.0-beta/thaum" -O "/usr/local/bin/thaum" && sudo chmod +x /usr/local/bin/thaum
+$ wget "https://github.com/Flaque/thaum/releases/download/v0.6.0-beta/thaum" -O "/usr/local/bin/thaum" && sudo chmod +x /usr/local/bin/thaum
 ```
 
 to install the binary into your path.
@@ -93,4 +93,18 @@ If you need help, you can type `thaum -h` to see the help screen.
 
 ```
 $ thaum -h
+```
+
+## Other helpful things.
+
+If you would not like your templates to named `.somethingOrAnother` so that test runners or other tools don't pick them up, you can use the extension `.thaum` at the end of your template and thaum will remove it for you when the file is created.
+
+For example, if I have a template file with the name:
+```
+foo_test.go.thaum
+```
+
+and I run `thaum foo`, thaum will create the file:
+```
+foo_test.go
 ```

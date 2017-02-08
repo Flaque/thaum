@@ -43,6 +43,7 @@ func compileTemplateFile(f TemplateFile) {
 
 // Creates a compiled file in the output
 func createCompiledFile(f TemplateFile, outputPath string) {
+	outputPath = RemoveThaumExtension(outputPath)
 	file, err := AppFs.Create(outputPath)
 	if err != nil {
 		fmt.Println("createCompiledFile Failed to create file: " + outputPath)

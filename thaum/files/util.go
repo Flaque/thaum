@@ -113,3 +113,8 @@ func ThaumTemplates() ([]string, error) {
 func IsDsStore(path string) bool {
 	return filepath.Base(path) == ".DS_Store"
 }
+
+// Trims the .thaum extension from the path
+func RemoveThaumExtension(path string) string {
+	return strings.TrimSuffix(path, ".thaum")
+}

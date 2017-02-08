@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"testing"
 	filet "github.com/Flaque/filet"
-
+	"github.com/stretchr/testify/assert"
 )
 
 // Tests the exists() function
@@ -96,4 +96,9 @@ func TestIsDsStore(t *testing.T) {
 			g.Assert(IsDsStore(testPath)).Equal(true)
 		})
 	})
+}
+
+func TestRemoveThaumExtension(t *testing.T) {
+	assert.Equal(t, RemoveThaumExtension("this.thaum"),
+		"this", true)
 }
