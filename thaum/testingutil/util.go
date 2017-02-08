@@ -1,77 +1,36 @@
 package testingutil
 
 import (
-	"fmt"
-	"github.com/spf13/afero"
-	"testing"
+  "fmt"
+  "testing"
+  "github.com/spf13/afero"
+  filet "github.com/flaque/filet"
 )
 
-// Keeps track of files that we've used so we can clean up.
-var testRegistry []string
 var AppFs afero.Fs = afero.NewOsFs()
-
-/*
-Creates a tmp directory for us to use.
-*/
-func TmpDir(dir string) string {
-	name, err := afero.TempDir(AppFs, dir, "dir")
-	if err != nil {
-		panic(fmt.Sprint("unable to work with test dir", err))
-	}
-	testRegistry = append(testRegistry, name)
-
-	return name
-}
 
 /*
 Creates a temporary `thaum_files` directory.
 */
-func TmpThaumFiles(dir string) string {
-	name := dir + "/thaum_files"
-	err := AppFs.Mkdir(name, 0755)
-	if err != nil {
-		panic(fmt.Sprint("unable to work with test dir", err))
-	}
-	testRegistry = append(testRegistry, name)
+func TmpThaumFiles(t *testing.T, dir string) string {
+  name := dir + "/thaum_files"
+  err := AppFs.Mkdir(name, 0755)
+  if err != nil {
+    panic(fmt.Sprint("unable to work with test dir", err))
+  }
+  filet.Files = append(filet.Files, name)
 
-	return name
-}
-
-/*
-Creates a tmp file for us to use when testing
-*/
-func TmpFile(dir string) afero.File {
-	file, err := afero.TempFile(AppFs, dir, "file")
-	if err != nil {
-		panic(fmt.Sprint("unable to work with tmp dir", err))
-	}
-
-	testRegistry = append(testRegistry, file.Name())
-
-	return file
+  return name
 }
 
 /*
 Creates a temporary thaum-test environment for us
 */
-func TmpThaumEnvironment(dir string) (string, string, string) {
-	myLocation := TmpDir(dir)
-	mySrc := TmpDir(myLocation)
-	thaum_files := TmpThaumFiles(myLocation)
-	myTemplate := TmpDir(thaum_files)
-	TmpFile(myTemplate)
-	return mySrc, thaum_files, myTemplate
-}
-
-/*
-Removes all files in our test registry
-*/
-func RemoveAllTestFiles(t *testing.T) {
-	for _, path := range testRegistry {
-		if err := AppFs.RemoveAll(path); err != nil {
-			t.Error(AppFs.Name(), err)
-		}
-	}
-
-	testRegistry = make([]string, 0)
+func TmpThaumEnvironment(t *testing.T, dir string) (string, string, string) {
+  myLocation := filet.TmpDir(t, dir)
+  mySrc := filet.TmpDir(t, myLocation)
+  thaum_files := TmpThaumFiles(t, myLocation)
+  myTemplate := filet.TmpDir(t, thaum_files)
+  filet.TmpFile(t, myTemplate, "")
+  return mySrc, thaum_files, myTemplate
 }
