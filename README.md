@@ -7,7 +7,7 @@ Thaum is a boilerplate and scaffolding command line utility. It purposely requir
 - No configuration.
 - Global templates and git included project templates.
 - Compiles mustache in paths for files like `{{name}}.spec.js`.
-
+ 
 # Install
 
 If you have [go](https://golang.org/), you can run:
