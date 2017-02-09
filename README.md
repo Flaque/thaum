@@ -16,13 +16,15 @@ If you have [go](https://golang.org/), you can run:
 $ go get github.com/flaque/thaum
 ```
 
-or, you can run:
+or, you can run this long (but effective!) command: 
 
 ```
 $ wget "https://github.com/Flaque/thaum/releases/download/v0.6.0-beta/thaum" -O "/usr/local/bin/thaum" && sudo chmod +x /usr/local/bin/thaum
 ```
 
 to install the binary into your path.
+
+**Note**: It is much easier to run that long and scary command than to install go. Seriously, if you don't have go, just copy paste that bad boy into your terminal. 
 
 # Usage
 
