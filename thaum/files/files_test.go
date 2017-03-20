@@ -1,40 +1,29 @@
 package files
 
 import (
-	. "github.com/franela/goblin"
+	filet "github.com/flaque/filet"
+	"github.com/stretchr/testify/assert"
 	"testing"
-  filet "github.com/flaque/filet"
 )
 
 func TestCreateCompiledFile(t *testing.T) {
 	defer filet.CleanUp(t)
 
-	g := Goblin(t)
-	g.Describe("createCompiledFile()", func() {
-		g.It("Should create a file", func() {
-			inPath := filet.TmpFile(t, filet.TmpDir(t, ""), "").Name()
-			outPath := filet.TmpDir(t, "") + "/test"
+	inPath := filet.TmpFile(t, filet.TmpDir(t, ""), "").Name()
+	outPath := filet.TmpDir(t, "") + "/test"
 
-			createCompiledFile(TemplateFile{"", inPath, make(map[string]string)},
-				outPath)
+	createCompiledFile(TemplateFile{"", inPath, make(map[string]string)},
+		outPath)
 
-			g.Assert(exists(outPath)).Equal(true)
-		})
-	})
+	assert.True(t, exists(outPath), "outpath does not exist")
 }
 
 func TestCreateCompiledDir(t *testing.T) {
 	defer filet.CleanUp(t)
 
-	g := Goblin(t)
+	outPath := filet.TmpDir(t, "") + "/test"
 
-	g.Describe("createCompiledFile()", func() {
-		g.It("Should create a file", func() {
-			outPath := filet.TmpDir(t, "") + "/test"
+	createCompiledDir(outPath)
 
-			createCompiledDir(outPath)
-
-			g.Assert(exists(outPath)).Equal(true)
-		})
-	})
+	assert.True(t, exists(outPath), "outpath does not exist")
 }
