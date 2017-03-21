@@ -1,22 +1,17 @@
 package mustache
 
 import (
-	. "github.com/franela/goblin"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
 func TestRender(t *testing.T) {
-	g := Goblin(t)
-	g.Describe("Mustache render()", func() {
-		g.It("Should correctly compile a template", func() {
-			template := "Hello {{firstName}} {{lastName}}!"
-			variables := map[string]string{
-				"firstName": "test",
-				"lastName":  "mcTest",
-			}
-			g.Assert(Render(template, variables)).Equal("Hello test mcTest!")
-		})
-	})
+	template := "Hello {{firstName}} {{lastName}}!"
+	variables := map[string]string{
+		"firstName": "test",
+		"lastName":  "mcTest",
+	}
+	assert.Equal(t, Render(template, variables), "Hello test mcTest!", "Rendered template does not equal expected values")
 }
 
 // Helper function for TestFindVariables
@@ -30,14 +25,12 @@ func contains(list []string, a string) bool {
 }
 
 func TestFindVariables(t *testing.T) {
-	g := Goblin(t)
-	g.Describe("Mustache TestFindVariables()", func() {
-		g.It("Should find all variables", func() {
-			template := "Hello {{firstName}} {{lastName}}! I like you {{firstName}}"
-			result := FindVariables(template)
-			g.Assert(len(result)).Equal(2)
-			g.Assert(contains(result, "firstName")).Equal(true)
-			g.Assert(contains(result, "lastName")).Equal(true)
-		})
-	})
+	assert := assert.New(t)
+
+	template := "Hello {{firstName}} {{lastName}}! I like you {{firstName}}"
+	result := FindVariables(template)
+
+	assert.Equal(len(result), 2, "Length of variables is not 2")
+	assert.Contains(result, "firstName", "Variables do not contain 'firstName'")
+	assert.Contains(result, "lastName", "Variables do not contain 'lastName'")
 }

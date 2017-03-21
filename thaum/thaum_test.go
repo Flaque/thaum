@@ -2,14 +2,13 @@ package main
 
 import (
 	"bytes"
+	filet "github.com/Flaque/filet"
 	testUtil "github.com/Flaque/thaum/thaum/testingutil"
-	. "github.com/franela/goblin"
+	"github.com/stretchr/testify/assert"
 	"io"
 	"os"
 	"path/filepath"
-	"strings"
 	"testing"
-  filet "github.com/Flaque/filet"
 )
 
 // Credit to https://gist.github.com/mindscratch/0faa78bd3c0005d080bf
@@ -47,24 +46,15 @@ func TestThaum(t *testing.T) {
 	myTemplate := filet.TmpDir(t, thaum_files)
 	// myFile      := testUtil.TmpFile(myTemplate)
 
-	g := Goblin(t)
-	g.Describe("Running thaum as ", func() {
+	// Change directory back to where a user might use it.
+	os.Chdir(mySrc)
 
-		g.It("thaum myTemplate will mention thaum_files", func() {
-
-			// Change directory back to where a user might use it.
-			os.Chdir(mySrc)
-
-			// Run Thaum
-			app := buildApp()
-			args := []string{"", filepath.Base(myTemplate)}
-			text := captureStdout(func() {
-				app.Run(args)
-			})
-
-			// Test that we mentioned which thaum files are being used
-			g.Assert(strings.Contains(text, "Using thaum_files")).Equal(true)
-		})
-
+	// Run Thaum
+	app := buildApp()
+	args := []string{"", filepath.Base(myTemplate)}
+	text := captureStdout(func() {
+		app.Run(args)
 	})
+
+	assert.Contains(t, text, "Using thaum_files", "thaum myTemplate does not contain thaum_files")
 }
